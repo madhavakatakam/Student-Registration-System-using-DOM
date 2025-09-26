@@ -1,0 +1,1 @@
+This Webpage helps create and store Student Information such as student name, id, email id and phone number. We can add, edit and delete student records that include the student's name, id, email id and phone number. Currently added HTML elements and JavaScript Functionality. 
