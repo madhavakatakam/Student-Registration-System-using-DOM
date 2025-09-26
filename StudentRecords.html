@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration System</title>
+</head>
+
+<body>
+  <h1>Student Registration System using DOM</h1>
+  <p>This Website helps create and store Student Information</p>
+  <form>
+    <label>Student Name:</label>
+    <input type="text" id="name" placeholder="Enter your name">
+    <label>Student ID:</label>
+    <input type="text" id="id" placeholder="Enter your ID">
+    <label>Student Email ID:</label>
+    <input type="email" id="email" placeholder="Enter your Email">
+    <label>Student Phone Number:</label>
+    <input type="tel" id="phone" placeholder="Enter your Phone Number">
+    <br>
+    <button type="button" id="submit">Submit</button>
+    <button type="reset" id="reset">Reset</button>
+  </form>
+
+  <script>
+    const studentdiv = document.createElement("div");
+    studentdiv.setAttribute("id", "student records");
+    document.body.appendChild(studentdiv);
+
+    let target = null;
+    document.getElementById("submit").addEventListener("click", addstudent);
+
+    function addstudent() {
+      const name = document.getElementById("name").value;
+      const id = document.getElementById("id").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+
+      if (!name || !id || !email || !phone) {
+        alert("Empty fields are not allowed");
+        return;
+      }
+
+      if (target) {
+        const p = target.querySelector("p");
+        p.innerHTML = `Student Name: ${name} <br> Student ID: ${id} <br> Student Email ID: ${email} <br> Student Phone Number: ${phone} <br>`;
+        document.getElementById("submit").innerText = "Submit";
+        target = null;
+      }
+
+      else {
+        const recordsdiv = document.createElement("div");
+        const p = document.createElement("p");
+        const button = document.createElement("button");
+        button.innerHTML = "Delete";
+        const editButton = document.createElement("button");
+        editButton.innerHTML = "Edit";
+
+        p.innerHTML = `Student Name: ${name} <br> Student ID: ${id} <br> Student Email ID: ${email} <br> Student Phone Number: ${phone} <br>`;
+        recordsdiv.appendChild(p);
+        recordsdiv.appendChild(button);
+        recordsdiv.appendChild(editButton);
+        studentdiv.appendChild(recordsdiv);
+
+        editButton.addEventListener("click", function () {
+          document.getElementById("name").value = name;
+          document.getElementById("id").value = id;
+          document.getElementById("email").value = email;
+          document.getElementById("phone").value = phone;
+          target = recordsdiv;
+          document.getElementById("submit").innerText = "Update";
+        });
+
+        document.getElementById("name").value = "";
+        document.getElementById("id").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("phone").value = "";
+      }
+    }
+  </script>
+
+</html>
