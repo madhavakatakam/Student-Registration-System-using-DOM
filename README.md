@@ -1,3 +1,4 @@
 This Webpage helps create and store Student Information such as student name, id, email id and phone number. We can add, edit and delete student records that include the student's name, id, email id and phone number. Currently added HTML elements and JavaScript Functionality. 
 Users can add, edit and delete student records. Will recieve alert message if the input fields are empty. Plain text no CSS styling added yet.
 Added CSS Styling using Tailwind CSS. CSS Styling is currently for heading, paragraph and form elements only. The Project now supports delete button feature to delete student records which was not included previously.
+Added input.css file which contains the source CSS file, output.css file which contains the compiled CSS that is linked to HTML file and package.json file which defines the project dependencies, scripts and meta data. Command to run the project (for reference): npm run build:css
