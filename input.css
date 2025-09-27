@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+.student-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 2px solid #22d3ee;
+  border-radius: 0.5rem;
+  background-color: #d7fbfd;
+  width: 80%;
+  max-width: 800px;
+}
+
+.student-container div {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 0.375rem;
+  background-color: #ecfeff;
+}
+
+.student-container button {
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.25rem;
+}
+
+.student-container button:first-of-type {
+  background-color: #f87171;
+  color: white;
+}
+
+.student-container button:last-of-type {
+  background-color: #60a5fa;
+  color: white;
+}
+
+.student-container p{
+    color: purple;
+}
+
+button{
+    cursor: pointer;
+    transition: transform 0.3 ease;
+}
+input{
+    transition: transform 0.3 ease;
+}
+
+input:hover,button:hover{
+    transform: scale(1.10);
+}
