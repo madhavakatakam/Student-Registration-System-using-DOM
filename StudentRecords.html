@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Registration System</title>
   <link href="output.css" rel="stylesheet">
+  <link href="input.css" rel="stylesheet">
 </head>
 
-<body class="bg-cyan-50">
+<body class="bg-cyan-50 flex flex-col items-center"> 
   <div class="flex flex-col items-center justify-center p-8 space-y-6">
     <h1 class="text-3xl text-green-400">
       Student Registration System using DOM:
@@ -93,6 +94,7 @@
         recordsdiv.appendChild(deleteButton);
         recordsdiv.appendChild(editButton);
         studentdiv.appendChild(recordsdiv);
+        studentdiv.classList.add("student-container");
 
         deleteButton.addEventListener("click",function(){
           studentdiv.removeChild(recordsdiv);
