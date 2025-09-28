@@ -2,14 +2,18 @@
 <html lang="en">
 
 <head>
+  <!--Title and Meta Tags-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Registration System</title>
+  <!--Tailwind CSS Links-->
   <link href="output.css" rel="stylesheet">
   <link href="input.css" rel="stylesheet">
+  
 </head>
 
 <body class="bg-cyan-50">
+  <!--Header Tag-->
   <header class="flex flex-col items-center justify-center p-8 space-y-6">
     <h1 class="text-3xl text-green-400">
       Student Registration System using DOM:
@@ -19,68 +23,106 @@
     </p>
   </header>
 
+  <!--Form Tag-->
   <form class="flex flex-col items-center justify-center">
-    <!-- Row 1 -->
+    <!-- Row 1: (Student Name + Student ID)-->
     <div class="flex flex-row space-x-6">
       <div class="flex flex-col">
         <label class="text-cyan-600 space-y-6">Student Name:</label>
         <input type="text" id="name" placeholder="Enter your name"
-          class="p-2 border rounded text-red-500 border-black w-96">
+          class="p-2 border rounded text-red-500 border-black w-96" required pattern="[A-Za-z ]+">
       </div>
       <div class="flex flex-col">
         <label class="text-cyan-600 space-y-6">Student ID:</label>
         <input type="number" id="id" placeholder="Enter your ID"
-          class="p-2 border rounded text-red-500 border-black w-96">
+          class="p-2 border rounded text-red-500 border-black w-96" required minlength="10">
       </div>
     </div>
 
-    <!-- Row 2 -->
+    <!-- Row 2: (Email + Phone)-->
     <div class="flex flex-row space-x-6">
       <div class="flex flex-col">
         <label class="text-cyan-600 space-y-6">Student Email ID:</label>
-        <input type="text" id="email" placeholder="Enter your Email"
-          class="p-2 border rounded text-red-500 border-black w-96">
+        <input type="email" id="email" placeholder="Enter your Email"
+          class="p-2 border rounded text-red-500 border-black w-96" required>
       </div>
       <div class="flex flex-col">
         <label class="text-cyan-600 space-y-6">Student Phone Number:</label>
-        <input type="text" id="phone" placeholder="Enter your Phone Number"
-          class="p-2 border rounded text-red-500 border-black w-96">
+        <input type="tel" id="phone" placeholder="Enter your Phone Number"
+          class="p-2 border rounded text-red-500 border-black w-96" required pattern="\d{10,}">
       </div>
     </div>
 
-    <!-- Buttons -->
+    <!-- Buttons: (Submit + Reset)-->
     <div class="flex justify-evenly space-x-48 mt-6">
       <button type="button" id="submit" class="px-4 py-2 bg-green-400 text-white rounded">Submit</button>
       <button type="reset" id="reset" class="px-4 py-2 bg-red-400 text-white rounded">Reset</button>
     </div>
   </form>
 
+  <!--JavaScript-->
   <script>
+    //Container where student Records are Stored
     const studentdiv = document.createElement("div");
     studentdiv.setAttribute("id", "student-records");
+    //Dynamic Scrollbar
+    studentdiv.classList.add("max-h-96","overflow-y-auto");
     document.body.appendChild(studentdiv);
-
+    
+    //Target variable to check if edit button is clicked
     let target = null;
 
+    //Button to add student data
     document.getElementById("submit").addEventListener("click", addstudent);
 
+    //Button to reset form data
     document.getElementById("reset").addEventListener("click", function () {
       target = null;
       document.getElementById("submit").innerText = "Submit";
     });
 
+    //Function to add or update student data
     function addstudent() {
-      const name = document.getElementById("name").value;
-      const id = document.getElementById("id").value;
-      const email = document.getElementById("email").value;
-      const phone = document.getElementById("phone").value;
+      //fetch clean input values
+      const name = document.getElementById("name").value.trim();
+      const id = document.getElementById("id").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
 
-      if (!name || !id || !email || !phone) {
+      //Validation for all fields are empty
+      if (!name && !id && !email && !phone) {
         alert("Empty fields are not allowed");
         return;
       }
 
+
+      // Student Name Validation
+      if (!/^[A-Za-z ]+$/.test(name)) {
+        alert("Student name must contain only letters and spaces");
+        return;
+      }
+
+      // Student ID Validation
+      if (!/^\d{10,}$/.test(id) || Number(id) <= 0) {
+        alert("Student ID must be a positive number with at least 10 digits");
+        return;
+      }
+
+
+      //Student Email Validation
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Invalid email format");
+        return;
+      }
+
+      // Student Phone Number Validation
+      if (!/^\d{10,}$/.test(phone)) {
+        alert("Phone number must be at least 10 digits long");
+        return;
+      }
+
       if (target) {
+        //Update Existing Records
         const p = target.querySelector("p");
         p.innerHTML = `
           Student Name: ${name} <br>
@@ -88,17 +130,21 @@
           Student Email ID: ${email} <br>
           Student Phone Number: ${phone} <br>
         `;
+        //Change Update Button to Submit Button
         document.getElementById("submit").innerText = "Submit";
         target = null;
       } else {
+        //Create new Record Div
         const recordsdiv = document.createElement("div");
         const p = document.createElement("p");
         const deleteButton = document.createElement("button");
         const editButton = document.createElement("button");
 
+        //Buttons for deleting and editing
         deleteButton.innerHTML = "Delete";
         editButton.innerHTML = "Edit";
 
+        //Student Details info
         p.innerHTML = `
           Student Name: ${name} <br>
           Student ID: ${id} <br>
@@ -106,16 +152,19 @@
           Student Phone Number: ${phone} <br>
         `;
 
+        //Append all elements to recordsdiv
         recordsdiv.appendChild(p);
         recordsdiv.appendChild(deleteButton);
         recordsdiv.appendChild(editButton);
         studentdiv.appendChild(recordsdiv);
         studentdiv.classList.add("student-container");
 
+        //Delete Records Functionality
         deleteButton.addEventListener("click", function () {
           studentdiv.removeChild(recordsdiv);
         });
 
+        //Edit Records Functionality
         editButton.addEventListener("click", function () {
           document.getElementById("name").value = name;
           document.getElementById("id").value = id;
