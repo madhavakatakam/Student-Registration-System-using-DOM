@@ -3,3 +3,4 @@ Users can add, edit and delete student records. Will recieve alert message if th
 Added CSS Styling using Tailwind CSS. CSS Styling is currently for heading, paragraph and form elements only. The Project now supports delete button feature to delete student records which was not included previously.
 Added input.css file which contains the source CSS file, output.css file which contains the compiled CSS that is linked to HTML file and package.json file which defines the project dependencies, scripts and meta data. Command to run the project (for reference): npm run build:css.
 Added CSS styling to Student Records section of the project by linking input.css to the HTML file. Included hover states to all the buttons and input fields. Buttons and input fields will now scale/zoom on mouse hover.
+Changed the layout of HTML file by using Semantic HTML for better readabilty, layout and functionality. Also updated input.css for responsive webpage.
