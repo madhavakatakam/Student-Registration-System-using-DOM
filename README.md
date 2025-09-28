@@ -33,7 +33,6 @@ Tailwind CSS – for styling the UI.
 JavaScript (DOM + LocalStorage) – for logic, functionality, validation, and data persistence.
 
 Project Structure:
-student-registration/
 │── index.html Main HTML file with JavaScript logic
 │── input.css Tailwind input file(source)
 │── output.css Tailwind compiled output CSS file
