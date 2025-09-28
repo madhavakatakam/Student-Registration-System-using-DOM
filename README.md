@@ -32,12 +32,13 @@ Tailwind CSS – for styling the UI.
 
 JavaScript (DOM + LocalStorage) – for logic, functionality, validation, and data persistence.
 
-Project Structure:
-│── index.html Main HTML file with JavaScript logic
-│── input.css Tailwind input file(source)
-│── output.css Tailwind compiled output CSS file
-│── package.json file that contains all the scripts and metadata
-│── README.md Documentation
+**Project Structure:**
+- `index.html` – Main HTML file with JavaScript logic  
+- `input.css` – Tailwind input file (source)  
+- `output.css` – Tailwind compiled output CSS file  
+- `package.json` – Contains scripts and metadata  
+- `README.md` – Documentation  
+
 
 How It Works:
 
