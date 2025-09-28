@@ -9,7 +9,6 @@
   <!--Tailwind CSS Links-->
   <link href="output.css" rel="stylesheet">
   <link href="input.css" rel="stylesheet">
-  
 </head>
 
 <body class="bg-cyan-50">
@@ -66,11 +65,17 @@
     const studentdiv = document.createElement("div");
     studentdiv.setAttribute("id", "student-records");
     //Dynamic Scrollbar
-    studentdiv.classList.add("max-h-96","overflow-y-auto");
+    studentdiv.classList.add("max-h-96", "overflow-y-auto");
     document.body.appendChild(studentdiv);
-    
+
     //Target variable to check if edit button is clicked
     let target = null;
+
+    // Array to hold student records
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+
+    // Render students from localStorage on load
+    window.onload = renderStudents;
 
     //Button to add student data
     document.getElementById("submit").addEventListener("click", addstudent);
@@ -81,105 +86,119 @@
       document.getElementById("submit").innerText = "Submit";
     });
 
+    //Function to render all students from array
+    function renderStudents() {
+      studentdiv.innerHTML = ""; // clear old records
+
+      if (students.length === 0) {
+        studentdiv.classList.remove("student-container"); // hide container when empty
+        return;
+      }
+
+      studentdiv.classList.add("student-container"); // show styled container if not empty
+      students.forEach((student, index) => {
+        createStudentRecord(student, index);
+      });
+    }
+
     //Function to add or update student data
     function addstudent() {
-      //fetch clean input values
       const name = document.getElementById("name").value.trim();
       const id = document.getElementById("id").value.trim();
       const email = document.getElementById("email").value.trim();
       const phone = document.getElementById("phone").value.trim();
 
-      //Validation for all fields are empty
+      //Input Validation
+      //All Fields are empty
       if (!name && !id && !email && !phone) {
         alert("Empty fields are not allowed");
         return;
       }
 
-
-      // Student Name Validation
+      //Name Validation
       if (!/^[A-Za-z ]+$/.test(name)) {
         alert("Student name must contain only letters and spaces");
         return;
       }
 
-      // Student ID Validation
+      //ID validation
       if (!/^\d{10,}$/.test(id) || Number(id) <= 0) {
         alert("Student ID must be a positive number with at least 10 digits");
         return;
       }
 
-
-      //Student Email Validation
+      //Email Validation
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         alert("Invalid email format");
         return;
       }
 
-      // Student Phone Number Validation
+      //Phone Number Validation
       if (!/^\d{10,}$/.test(phone)) {
         alert("Phone number must be at least 10 digits long");
         return;
       }
 
+      const studentObj = { name, id, email, phone };
+
       if (target) {
-        //Update Existing Records
-        const p = target.querySelector("p");
-        p.innerHTML = `
-          Student Name: ${name} <br>
-          Student ID: ${id} <br>
-          Student Email ID: ${email} <br>
-          Student Phone Number: ${phone} <br>
-        `;
-        //Change Update Button to Submit Button
+        // Update existing record
+        const index = target.getAttribute("data-index");
+        students[index] = studentObj;
+        localStorage.setItem("students", JSON.stringify(students));
+        renderStudents();
         document.getElementById("submit").innerText = "Submit";
         target = null;
       } else {
-        //Create new Record Div
-        const recordsdiv = document.createElement("div");
-        const p = document.createElement("p");
-        const deleteButton = document.createElement("button");
-        const editButton = document.createElement("button");
-
-        //Buttons for deleting and editing
-        deleteButton.innerHTML = "Delete";
-        editButton.innerHTML = "Edit";
-
-        //Student Details info
-        p.innerHTML = `
-          Student Name: ${name} <br>
-          Student ID: ${id} <br>
-          Student Email ID: ${email} <br>
-          Student Phone Number: ${phone} <br>
-        `;
-
-        //Append all elements to recordsdiv
-        recordsdiv.appendChild(p);
-        recordsdiv.appendChild(deleteButton);
-        recordsdiv.appendChild(editButton);
-        studentdiv.appendChild(recordsdiv);
-        studentdiv.classList.add("student-container");
-
-        //Delete Records Functionality
-        deleteButton.addEventListener("click", function () {
-          studentdiv.removeChild(recordsdiv);
-        });
-
-        //Edit Records Functionality
-        editButton.addEventListener("click", function () {
-          document.getElementById("name").value = name;
-          document.getElementById("id").value = id;
-          document.getElementById("email").value = email;
-          document.getElementById("phone").value = phone;
-          target = recordsdiv;
-          document.getElementById("submit").innerText = "Update";
-        });
-
-        // Clear form fields after submission
-        document.getElementById("name").value = "";
-        document.getElementById("id").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("phone").value = "";
+        // Add new record
+        students.push(studentObj);
+        localStorage.setItem("students", JSON.stringify(students));
+        renderStudents();
       }
+
+      // Clear form
+      document.getElementById("name").value = "";
+      document.getElementById("id").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("phone").value = "";
+    }
+
+    // Function to create student record element
+    function createStudentRecord(student, index) {
+      const recordsdiv = document.createElement("div");
+      recordsdiv.setAttribute("data-index", index);
+
+      const p = document.createElement("p");
+      p.innerHTML = `
+        Student Name: ${student.name} <br>
+        Student ID: ${student.id} <br>
+        Student Email ID: ${student.email} <br>
+        Student Phone Number: ${student.phone} <br>
+      `;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "Delete";
+      deleteButton.addEventListener("click", function () {
+        students.splice(index, 1);
+        localStorage.setItem("students", JSON.stringify(students));
+        renderStudents();
+      });
+
+      const editButton = document.createElement("button");
+      editButton.innerHTML = "Edit";
+      editButton.addEventListener("click", function () {
+        document.getElementById("name").value = student.name;
+        document.getElementById("id").value = student.id;
+        document.getElementById("email").value = student.email;
+        document.getElementById("phone").value = student.phone;
+        target = recordsdiv;
+        document.getElementById("submit").innerText = "Update";
+      });
+
+      recordsdiv.appendChild(p);
+      recordsdiv.appendChild(deleteButton);
+      recordsdiv.appendChild(editButton);
+      studentdiv.appendChild(recordsdiv);
     }
   </script>
 </body>
