@@ -1,7 +1,74 @@
-This Webpage helps create and store Student Information such as student name, id, email id and phone number. We can add, edit and delete student records that include the student's name, id, email id and phone number. Currently added HTML elements and JavaScript Functionality. 
-Users can add, edit and delete student records. Will recieve alert message if the input fields are empty. Plain text no CSS styling added yet.
-Added CSS Styling using Tailwind CSS. CSS Styling is currently for heading, paragraph and form elements only. The Project now supports delete button feature to delete student records which was not included previously.
-Added input.css file which contains the source CSS file, output.css file which contains the compiled CSS that is linked to HTML file and package.json file which defines the project dependencies, scripts and meta data. Command to run the project (for reference): npm run build:css.
-Added CSS styling to Student Records section of the project by linking input.css to the HTML file. Included hover states to all the buttons and input fields. Buttons and input fields will now scale/zoom on mouse hover.
-Changed the layout of HTML file by using Semantic HTML for better readabilty, layout and functionality. Also updated input.css for responsive webpage.
-Documentation updated and added Local Storage functionality. Now data is retained even when you refresh the page.
+Student Registration System (DOM + LocalStorage):
+
+Developed as a Learning Project for JavaScript, DOM Manipulation and Local Storage.
+
+This project is a simple Student Registration System built using HTML, TailwindCSS, and JavaScript.
+It allows users to add, edit, delete, and store student records. The data is retained using the browser's Local Storage.
+
+Features:
+Can add student details (Name, ID, Email, Phone Number).
+
+Can edit existing student records.
+
+Can delete student records.
+
+Data is stored in LocalStorage so it persists even after refreshing or closing the browser.
+
+Input validations in the form:
+
+Student Name – accepts only letters and spaces.
+
+Student ID – accepts only positive numbers, at least 10 digits.
+
+Email – must follow standard email format.
+
+Phone Number – accepts only numbers with at least 10 digits.
+
+Technologies Used:
+
+HTML5 – structure of the form and records display.
+
+Tailwind CSS – for styling the UI.
+
+JavaScript (DOM + LocalStorage) – for logic, functionality, validation, and data persistence.
+
+Project Structure:
+student-registration/
+│── index.html Main HTML file with JavaScript logic
+│── input.css Tailwind input (source)
+│── output.css Tailwind compiled output CSS
+│── README.md Documentation
+
+How It Works:
+
+When the page loads, student data is retrieved from localStorage (if available) and displayed.
+
+On clicking Submit button:
+
+Input data is validated.
+
+If valid data is entered, a student object {name, id, email, phone} is created.
+
+If you click edit button and edits data, it updates the record.
+
+If new, on clicking submit button, it pushes it into the students array.
+
+Data is saved back into localStorage.
+
+UI is refreshed by re-rendering all records.
+
+On clicking delete button, the record is removed from the array and localStorage, and UI updates instantly.
+
+On clicking edit button, the student’s data is loaded back into the form for updating.
+
+How to Run:
+
+Clone or download the repository.
+
+Open index.html in a browser.
+
+Command to build project is npm run build:css
+
+Add student details using the form.
+
+Refresh or reopen the page and data remains due to LocalStorage.
